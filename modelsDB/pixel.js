@@ -1,4 +1,4 @@
-var mongoose = requires('mongoose'),
+var mongoose = require('mongoose'),
  Schema   = mongoose.Schema;
 
  var pixelObj = new Schema({

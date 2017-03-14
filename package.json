@@ -9,9 +9,11 @@
   "author": "israel canul",
   "license": "ISC",
   "dependencies": {
+    "assert": "^1.4.1",
     "body-parser": "^1.17.1",
     "express": "^4.13.2",
     "method-override": "^2.3.7",
-    "mongoose": "^4.9.0"
+    "mongoose": "^4.9.0",
+    "mpromise": "^0.5.5"
   }
 }
