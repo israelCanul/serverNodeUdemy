@@ -1,15 +1,15 @@
 var express = require('express');
 var app = express();
+var routes = require('./routes/index');
+// manejador de routes del sitio
+var router = express.Router();
 
-app.get('/',function(req, res){
-  console.log(req.query.id);
-  res.send('hello express');
-});
-app.get('/about',function(req, res){
-  console.log(req.query.id);
-  res.send('hello express');
-});
+router.get('/',routes.index);
+router.get('/about',routes.about);
 
-app.listen(3000,function(){
-  console.log('nuevo usuario conectado');
+
+
+app.use(router);
+app.listen(3000, function() {
+  console.log("Node server running on http://localhost:3000");
 });
