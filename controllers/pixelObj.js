@@ -9,7 +9,7 @@ exports.findAllPixelObj = function(req,res){
     if(err){
       res.status(500).send("Errorr "+variables.OPERACION+"[1]: " + err.message);
     }
-    console.log('GET [1]/PixelObj - All');
+    console.log(variables.GET+'/PixelObj - All');
     if(pixelobjs){
       res.status(200).jsonp(pixelobjs);
     }else{
@@ -22,7 +22,7 @@ exports.findAllPixelObj = function(req,res){
 exports.findById = function(req,res){
   PixelObj.findById(req.params.id,(err,pixelobj)=>{
     if(err) return res.status(500).send("Error "+variables.OPERACION+"[1]: " + err.message);
-    console.log('GET [1]/PixelObj - '+req.params.id);
+    console.log(variables.GET+'/PixelObj - '+req.params.id);
     if(pixelobj){
       res.status(200).jsonp(pixelobj);
     }else{
@@ -42,7 +42,7 @@ exports.addPixelObj = function(req,res){
   });
   var promise = pixel.save();
   promise.then((pixelobj) => {
-    console.log('GET [2]/PixelObj');
+    console.log(variables.POST+'/PixelObj');
     res.status(200).jsonp(pixel);
   }).catch((err) => {
     if(err) return res.status(500).send("Errorr "+variables.OPERACION+"[1]: " +err.message);
@@ -53,7 +53,7 @@ exports.addPixelObj = function(req,res){
 exports.updatePixelObj = function(req,res){
   PixelObj.findById(req.params.id,(err,pixelobj)=>{
     if(err) return res.status(500).send("Errorr "+variables.OPERACION+"[1]: " + err.message);
-    console.log('GET [1]/PixelObj - '+req.params.id);
+    console.log(variables.GET+'/PixelObj - '+req.params.id);
     pixelobj.x = req.body.x;
     pixelobj.y = req.body.y;
     pixelobj.value = req.body.value;
@@ -62,7 +62,7 @@ exports.updatePixelObj = function(req,res){
 
     var promise = pixelobj.save();
     promise.then(() => {
-      console.log('PUT [4]/PixelObj - '+req.params.id);
+      console.log(variables.PUT+'/PixelObj - '+req.params.id);
       res.status(200).jsonp(pixelobj);
     }).catch((err) => {
       if(err) return res.status(500).send("Errorr "+variables.OPERACION+"[2]: " +err.message);
@@ -76,11 +76,11 @@ exports.deletePixelObj = function(req,res){
     if(err) return res.status(500).send("Errorr "+variables.OPERACION+"[1]: "+err.message);
     //una vez que se verifique que no existe error se pregunta si
     //la variable existe o no (existe si fue encontrada el la bd)
-    console.log('GET [1]/PixelObj - '+req.params.id);
+    console.log(variables.GET+'/PixelObj - '+req.params.id);
     if(pixelobj){
       pixelobj.remove((err)=>{
         if(err) return res.status(500).send("Errorr "+variables.OPERACION+"[2]: "+err.message);
-          console.log('DELETE [3]/PixelObj - '+req.params.id);
+          console.log(variables.DELETE+'/PixelObj - '+req.params.id);
         res.status(200).send(req.params.id + ': borrado');
       });
     }else{
