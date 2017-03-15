@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var PixelObj = mongoose.model('PixelObj');
-var assert = require('assert');
 var variables = require('../helpers/variables');
 
 //GET - Return all pixel objects in the DB
