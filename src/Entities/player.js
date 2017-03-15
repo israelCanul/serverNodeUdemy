@@ -1,15 +1,30 @@
  export default class Player{
   constructor(contexto){
-    console.log('entro');
     this.contexto = contexto;
-    this.dibujar();
+    this.imagen = new Image();
+    this.imagen.src = 'img/sprite.png';
+    this.spriteWidth = this.imagen.width / 10;
+    this.spriteHeight = this.imagen.height / 4;
+    this.scaleImg = 1;
+    this.animacion = [];
+    this.crearAnimaciones();
+
   }
   dibujar(){
-    var ctx = this.contexto;
+    var ctx = this.contexto
     if(this.contexto){
-      ctx.fillRect(25,25,100,100);
-      ctx.clearRect(45,45,60,60);
-      ctx.fillRect(50,50,50,50);
+      ctx.drawImage(this.imagen,this.animacion[0][0],this.animacion[0][1],this.spriteWidth,this.spriteHeight,0,0,this.getWidth(),this.getHeight());
     }
+  }
+  crearAnimaciones(){
+    this.animMoveLeft = [[this.spriteWidth * 6,this.spriteHeight * 0],[this.spriteWidth * 7,this.spriteHeight * 0],[this.spriteWidth * 8,this.spriteHeight * 0]];
+    this.animStop = [[this.spriteWidth * 0,this.spriteHeight * 0],[this.spriteWidth * 0,this.spriteHeight * 1],[this.spriteWidth * 1,this.spriteHeight * 2]];
+    this.animacion = this.animStop;
+  }
+  getWidth(){
+    return this.scaleImg * this.spriteWidth;
+  }
+  getHeight(){
+    return this.scaleImg * this.spriteHeight;
   }
 }
