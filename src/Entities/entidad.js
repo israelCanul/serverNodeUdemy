@@ -17,15 +17,18 @@
      this.dy = 0;
      // el color del objeto
      this.color = c;
-
+     this.debug = false;
    }
-
+   setDebug(debug){
+     this.debug = debug;
+   }
    moverBase(delta){
      //Actualizamos las posiciones de las coordenadas
      this.x += (delta * this.dx)/1000;
      this.y+=(delta * this.dy)/1000;
    }
    dibujar(ctx){
+
      ctx.save();
      //ctx.drawImage(this.imagen,this.spriteWidth * 6,this.spriteHeight * 3,this.spriteWidth,this.spriteHeight,this.x,this.y,this.getWidth(),this.getHeight());
      ctx.fillStyle = this.color;
@@ -54,5 +57,10 @@
    }
    setVelocidadVertical(dyIni){
    		this.dy=dyIni;
+   }
+   debugLog(variable){
+     if(this.debug){
+       console.log(variable);
+     }
    }
 }

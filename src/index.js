@@ -14,7 +14,7 @@ function inicio(){
 
 
 import Player from './Entities/player';
-
+import {debug} from './config';
 
 class Juego{
   constructor(){
@@ -23,21 +23,19 @@ class Juego{
     this.canvas.width=800;
     this.canvas.height=400;
     this.gameRunning = true;
-    this.canvas.style.background = 'black';
+    this.canvas.style.background = 'white';
 
     //inicializamos los controles
     this.izquierdoPulsado=false;
 	  this.derechoPulsado=false;
     this.espacioPulsado=false;
-
+    this.arribaPulsado = false;
+    this.abajoPulsado = false;
     // creamos el player
-    this.player = new Player(0, 0, 35, 35, 1,this);
+    this.player = new Player(0, 0, 20, 35, 1,this);
+    this.player.setDebug(debug);// habilito el debug de la entity
   }
   iniciar(){
-    this.izquierdo = false;
-    this.derecho = false;
-    this.arriba = false;
-    this.abajo = false;
     this.enemigos = [];
   }
   controlLoop(){
@@ -63,6 +61,7 @@ class Juego{
     this.player.dibujar(this.contexto);
 
     this.player.setVelocidadHorizontal(0);
+    this.player.setVelocidadVertical(0);
 		if (this.izquierdoPulsado && !this.derechoPulsado)
 		{
 			this.player.setVelocidadHorizontal(-this.player.velocidadMovimiento);
@@ -71,6 +70,14 @@ class Juego{
 		{
 			this.player.setVelocidadHorizontal(this.player.velocidadMovimiento);
 		}
+    if (this.arribaPulsado && !this.abajoPulsado)
+    {
+      this.player.setVelocidadVertical(-this.player.velocidadMovimiento);
+    }
+    else if (!this.arribaPulsado && this.abajoPulsado)
+    {
+      this.player.setVelocidadVertical(this.player.velocidadMovimiento);
+    }
   }
 
 
@@ -81,7 +88,8 @@ class Juego{
   pulsarTecla(e){
   		//Anulamos las acciones por defecto de la tecla
   		e.preventDefault();
-      console.log("p"+e.keyCode);
+
+
   		//Si estamos en el dinal de una partida, se espera la pulsación ENTER
   		// if (this.esperandoTecla && e.keyCode==13)
   		// {
@@ -93,10 +101,20 @@ class Juego{
   			//Cursor izquierdo
   			this.izquierdoPulsado=true;
   		}
+      else if (e.keyCode==40)
+  		{
+  			//espacio
+  			this.abajoPulsado=true;
+  		}
   		else if (e.keyCode==39)
   		{
   			//Cursor derecho
   			this.derechoPulsado=true;
+  		}
+      else if (e.keyCode==38)
+  		{
+  			//espacio
+  			this.arribaPulsado=true;
   		}
   		else if (e.keyCode==32)
   		{
@@ -110,17 +128,27 @@ class Juego{
   	*/
   	soltarTecla(e){
   		e.preventDefault();
-      console.log("s"+e.keyCode);
+
   		if (e.keyCode==37)
   		{
   			//Cursor izquierdo
   			this.izquierdoPulsado=false;
 
   		}
+      else if (e.keyCode==40)
+  		{
+  			//espacio
+  			this.abajoPulsado=false;
+  		}
   		else if (e.keyCode==39)
   		{
   			//Cursor derecho
   			this.derechoPulsado=false;
+  		}
+      else if (e.keyCode==38)
+  		{
+  			//espacio
+  			this.arribaPulsado=false;
   		}
   		else if (e.keyCode==32)
   		{
