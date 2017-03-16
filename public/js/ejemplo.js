@@ -370,3 +370,31 @@ function Juego(){
 		}
 	};
 }
+
+
+
+
+// crearAnimaciones(){
+//   this.animMoveRight = [[this.spriteWidth * 6,this.spriteHeight * 3],[this.spriteWidth * 7,this.spriteHeight * 3],[this.spriteWidth * 8,this.spriteHeight * 0]];
+//   this.animMoveLeft = [[this.spriteWidth * 6,this.spriteHeight * 0],[this.spriteWidth * 7,this.spriteHeight * 0],[this.spriteWidth * 8,this.spriteHeight * 0]];
+//   this.animStop = [[this.spriteWidth * 0,this.spriteHeight * 0],[this.spriteWidth * 2,this.spriteHeight * 0]];
+//   this.animMoveDown = [[this.spriteWidth * 0,this.spriteHeight * 0],[this.spriteWidth * 1,this.spriteHeight * 0],[this.spriteWidth * 2,this.spriteHeight * 0]];
+//   this.animMoveUp = [[this.spriteWidth * 3,this.spriteHeight * 0],[this.spriteWidth * 4,this.spriteHeight * 0],[this.spriteWidth * 5,this.spriteHeight * 0]];
+//   this.animacion = this.animStop ;
+//   //this.animar();
+//   this.fotograma = [this.animacion[0][0],this.animacion[0][1]];
+// }
+
+
+
+// animar(){
+// 	var that = this;
+// 	window.setInterval(function(){
+// 		if(that.cont == that.animacion.length){
+// 			that.cont = 0;
+// 		}
+// 		console.log(that.cont);
+// 		that.fotograma = [that.animacion[that.cont][0],that.animacion[that.cont][1]];
+// 		that.cont++;//
+// 	},1000/5);
+// }

@@ -1,43 +1,37 @@
+import {velPlayer} from '../config';
+import Entidad from './entidad';
+import Enemy from './entidad';
 
+ export default class Player extends Entidad{
+  constructor(x,y,w,h,t,juego){
+    super(x,y,w,h,t,"blue");
+    this.juego = juego;
+    this.velocidadMovimiento = velPlayer;
+  }
 
- export default class Player{
-  constructor(contexto){
-    this.contexto = contexto;
-    this.imagen = new Image();
-    this.imagen.src = 'img/sprite.png';
-    this.spriteWidth = this.imagen.width / 10;
-    this.spriteHeight = this.imagen.height / 4;
-    this.scaleImg = 0.8;
-    this.animacion = [];
-    this.crearAnimaciones();
-    this.cont= 0;
+  mover(delta){
+    //console.log(delta);
+    console.log((this.x + this.width + 5));
+    // console.log(((this.x - this.width - this.dx) < 0));
+    //console.log(this.x);
+    // verificamos que el objeto no es fuera del canvas que el valr de x mas el ancho del objeto sea menor a
+    if (this.dx<0 && this.x<10)
+   {
+     return;
+   }
+   //Si estamos en el margen derecho del mapa, no podemos movernos más a la derecha
+   if (this.dx>0 && this.x>this.juego.canvas.width-(this.width+10))
+   {
+     return;
+   }
+
+    this.moverBase(delta);
   }
-  dibujar(){
-    var ctx = this.contexto
-    if(this.contexto){
-      let fotograma = this.animar();
-      this.cont++;// contador de la animacion
-      ctx.drawImage(this.imagen,fotograma[0],fotograma[1],this.spriteWidth,this.spriteHeight,0,0,this.getWidth(),this.getHeight());
-    }
-  }
-  crearAnimaciones(){
-    this.animMoveRight = [[this.spriteWidth * 6,this.spriteHeight * 0],[this.spriteWidth * 7,this.spriteHeight * 0],[this.spriteWidth * 8,this.spriteHeight * 0]];
-    this.animMoveLeft = [[this.spriteWidth * 6,this.spriteHeight * 0],[this.spriteWidth * 7,this.spriteHeight * 0],[this.spriteWidth * 8,this.spriteHeight * 0]];
-    this.animStop = [[this.spriteWidth * 0,this.spriteHeight * 0],[this.spriteWidth * 0,this.spriteHeight * 0],[this.spriteWidth * 1,this.spriteHeight * 0],[this.spriteWidth * 1,this.spriteHeight * 0],[this.spriteWidth * 2,this.spriteHeight * 0],[this.spriteWidth * 2,this.spriteHeight * 0]];
-    this.animMoveUp = [[this.spriteWidth * 6,this.spriteHeight * 0],[this.spriteWidth * 7,this.spriteHeight * 0],[this.spriteWidth * 8,this.spriteHeight * 0]];
-    this.animMoveDown = [[this.spriteWidth * 6,this.spriteHeight * 0],[this.spriteWidth * 7,this.spriteHeight * 0],[this.spriteWidth * 8,this.spriteHeight * 0]];
-    this.animacion = this.animMoveLeft;
-  }
-  getWidth(){
-    return this.scaleImg * this.spriteWidth;
-  }
-  getHeight(){
-    return this.scaleImg * this.spriteHeight;
-  }
-  animar(){
-    if(this.cont == this.animacion.length){
-      this.cont = 0;
-    }
-    return [this.animacion[this.cont][0],this.animacion[this.cont][1]];
-  }
+  colosionadoCon(otro){
+		//Si hemos chocado con una nave alienígena, morimos y el juego se acaba
+		if (otro instanceof Enemy)
+		{
+			this.juego.notificarMuerte();
+		}
+	}
 }
