@@ -2,6 +2,7 @@ import {velPlayer} from '../config';
 import Entidad from './entidad';
 import Enemy from './entidad';
 
+
  export default class Player extends Entidad{
   constructor(x,y,w,h,t,juego){
     super(x,y,w,h,t,"blue");
@@ -13,7 +14,7 @@ import Enemy from './entidad';
     // this.brazo = [this.width-(this.width * .8),this.height-(this.height * .65)]
     this.pos = 0;
     this.sprite = {
-      correrR : [5,0,1,2,3,4,5],
+      correrR : [5,0,1,2,3,4],
       correrL : [6,7,8,9,10,11],
       stop : [12]
     }
