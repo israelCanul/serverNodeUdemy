@@ -27,12 +27,12 @@ class Juego{
 
     //inicializamos los controles
     this.izquierdoPulsado=false;
-	  this.derechoPulsado=false;
+	  this.derechoPulsado=true;
     this.espacioPulsado=false;
     this.arribaPulsado = false;
     this.abajoPulsado = false;
     // creamos el player
-    this.player = new Player(0, 0, 20, 35, 1,this);
+    this.player = new Player(780, 0, 20, 35, 1,this);
     this.player.setDebug(debug);// habilito el debug de la entity
   }
   iniciar(){
