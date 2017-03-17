@@ -7,12 +7,38 @@ import Enemy from './entidad';
     super(x,y,w,h,t,"blue");
     this.juego = juego;
     this.velocidadMovimiento = velPlayer;
-    this.cabeza = [this.width - (this.width * .6) ,this.height -(this.height * .7)];
-    this.torzo = [this.width - (this.width * .5),this.height -(this.height * .6)];
-    this.pie = [this.width-(this.width * .8),this.height-(this.height * .7)]
-    this.brazo = [this.width-(this.width * .8),this.height-(this.height * .65)]
-  }
+    // this.cabeza = [this.width - (this.width * .6) ,this.height -(this.height * .7)];
+    // this.torzo = [this.width - (this.width * .5),this.height -(this.height * .65)];
+    // this.pie = [this.width-(this.width * .8),this.height-(this.height * .65)]
+    // this.brazo = [this.width-(this.width * .8),this.height-(this.height * .65)]
+    this.pos = 0;
+    this.sprite = {
+      correrR : [5,0,1,2,3,4,5],
+      correrL : [6,7,8,9,10,11],
+      stop : [12]
+    }
+    this.animContador = 0;
+    this.frameDraw = 0;
+    this.frame = 0;
+    this.frames = 3;
 
+
+    //  el ancho del objeto
+    this.widthImg = 100;
+    // el alto del objeto
+    this.heightImg = 134;
+  }
+  sincronizarFrames(){
+    let frame = this.frame;
+    let frames = this.frames;
+        if (frame < frames){
+            this.frame++;
+            console.log('s');
+            return true;
+        } else {
+            this.frame = 0;
+        }
+  }
   mover(delta){
     // verificamos que el objeto no es fuera del canvas que el valr de x mas el ancho del objeto sea menor a
     if (this.dx<0 && this.x<10)
@@ -33,6 +59,8 @@ import Enemy from './entidad';
   {
     return;
   }
+
+    this.setFrame();
     this.moverBase(delta);
   }
   colosionadoCon(otro){
@@ -42,79 +70,37 @@ import Enemy from './entidad';
 			this.juego.notificarMuerte();
 		}
 	}
-  //@sobreescribimos
+  setFrame(){
+
+    if(this.sincronizarFrames()) return;
+
+    if(this.juego.derechoPulsado){
+      this.animContador++;
+      if(this.animContador >= this.sprite.correrR.length){
+        this.animContador=0;
+      }
+
+      this.frameDraw = this.sprite.correrR[this.animContador];
+
+    }else if(this.juego.izquierdoPulsado){
+          this.animContador++;
+          if(this.animContador >= this.sprite.correrL.length){
+            this.animContador=0;
+          }
+          this.frameDraw = this.sprite.correrL[this.animContador];
+
+    }else{
+      this.animContador++;
+      if(this.animContador >= this.sprite.stop.length){
+        this.animContador=0;
+      }
+      this.frameDraw = this.sprite.stop[this.animContador];
+    }
+  }
+
   dibujar(ctx){
-    //super.dibujar(ctx);
-    var cabeza = this.cabeza;
-    var torzo = this.torzo;
-    var brazo = this.brazo;
-    // condicional para hacer debug del player
-    this.debugLog('sss');
-    if(this.debug){
-      ctx.save();
-      ctx.strokeStyle = "#FF0000";
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-      ctx.restore();
 
-    }
-
-ctx.save();
-    ctx.fillStyle = 'yellow';
-    ctx.fillRect(this.x+((this.width / 2) - (cabeza[0]/2)), this.y, cabeza[0], cabeza[1]);
-    ctx.fillStyle = '#750A0A';
-    ctx.fillRect(this.x+((this.width / 2) - (torzo[0]/2)), this.y + cabeza[1], torzo[0], torzo[1]);
-    ctx.fillStyle = '#0000ff';
-    // aqui se dibuja los brazos
-    if(this.juego.derechoPulsado){
-      ctx.fillRect(this.x+((this.width / 2) - (brazo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
-      //ctx.fillRect(this.x+((this.width / 2) + (torzo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
-    }else if(this.juego.izquierdoPulsado){
-      ctx.fillRect(this.x+((this.width / 2) - (torzo[0]/2)) - brazo[0], this.y + cabeza[1], brazo[0], brazo[1]);
-      ctx.fillRect(this.x+((this.width / 2) + (torzo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
-    }else{
-      ctx.fillRect(this.x+((this.width / 2) - (torzo[0]/2)) - brazo[0], this.y + cabeza[1], brazo[0], brazo[1]);
-      ctx.fillRect(this.x+((this.width / 2) + (torzo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
-    }
-    ctx.restore();
-    this.drawPies(ctx);
+    ctx.drawImage(this.juego.imgSprites,((this.juego.imgSprites.width/(this.juego.imgSprites.width/this.widthImg))*this.frameDraw), 0,this.widthImg,this.heightImg, this.x, this.y,this.width, this.height);
   }
-  drawPies(ctx){
-    ctx.save();
-    ctx.strokeStyle = "#0000ff";
-    ctx.fillStyle = '#0000ff';
-    if(this.juego.derechoPulsado){
-      // ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
-      // ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
 
-      ctx.moveTo(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1]);
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)) + this.pie[0],this.y + this.cabeza[1] + this.torzo[1]);
-      // modificadores de los pies [inicio]
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)) + this.pie[0]+(5) ,this.y + this.cabeza[1] + this.torzo[1] + this.pie[1]);
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)) + (5),this.y + this.cabeza[1] + this.torzo[1] + this.pie[1]);
-      // modificadores de los pies [final]
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1]);
-
-      ctx.moveTo(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1]);
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)) + this.pie[0],this.y + this.cabeza[1] + this.torzo[1]);
-      // modificadores de los pies [inicio]
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)) + this.pie[0] ,this.y + this.cabeza[1] + this.torzo[1] + this.pie[1] );
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)) ,this.y + this.cabeza[1] + this.torzo[1] + this.pie[1] );
-      // modificadores de los pies [final]
-      ctx.lineTo(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1]);
-
-      ctx.stroke();
-      ctx.fill();
-
-      // ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
-      // ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
-
-    }else if(this.juego.izquierdoPulsado){
-      ctx.fillRect(this.x+((this.width / 2) - (this.torzo[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
-      ctx.fillRect(this.x+((this.width / 2) - (this.torzo[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
-    }else{
-      ctx.fillRect(this.x+((this.width / 2) + (this.torzo[0]/2) - this.pie[0]), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
-      ctx.fillRect(this.x+((this.width / 2) - (this.torzo[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
-    }
-      ctx.restore();
-  }
 }

@@ -398,3 +398,168 @@ function Juego(){
 // 		that.cont++;//
 // 	},1000/5);
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+//@sobreescribimos
+dibujar(ctx){
+	//super.dibujar(ctx);
+	var cabeza = this.cabeza;
+	var torzo = this.torzo;
+	var brazo = this.brazo;
+	// condicional para hacer debug del player
+	this.debugLog('sss');
+	if(this.debug){
+		ctx.save();
+		ctx.fillStyle = 'yellow';
+		ctx.fillRect(this.x, this.y, this.width, this.height);
+		ctx.restore();
+	}
+
+	ctx.save();
+
+	ctx.fillStyle = 'black';
+	ctx.fillRect(this.x+((this.width / 2) - (cabeza[0]/2)), this.y, cabeza[0], cabeza[1]);
+	ctx.fillStyle = '#750A0A';
+	ctx.fillRect(this.x+((this.width / 2) - (torzo[0]/2)), this.y + cabeza[1], torzo[0], torzo[1]);
+	ctx.fillStyle = '#00ffff';
+	// aqui se dibuja los brazos
+	if(this.juego.derechoPulsado){
+		ctx.fillRect(this.x+((this.width / 2) - (brazo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
+		//ctx.fillRect(this.x+((this.width / 2) + (torzo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
+	}else if(this.juego.izquierdoPulsado){
+		ctx.fillRect(this.x+((this.width / 2) - (torzo[0]/2)) - brazo[0], this.y + cabeza[1], brazo[0], brazo[1]);
+		ctx.fillRect(this.x+((this.width / 2) + (torzo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
+	}else{
+		ctx.fillRect(this.x+((this.width / 2) - (torzo[0]/2)) - brazo[0], this.y + cabeza[1], brazo[0], brazo[1]);
+		ctx.fillRect(this.x+((this.width / 2) + (torzo[0]/2)), this.y + cabeza[1], brazo[0], brazo[1]);
+	}
+	this.drawPies(ctx);
+
+	ctx.fill();
+	ctx.restore();
+	if(this.pos==8){
+		this.pos=0;
+	}else{
+		this.pos++;
+	}
+
+}
+drawPies(ctx){
+	/*
+	no valido para posicion inicial
+	//ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);//derecho
+	*/
+
+	ctx.fillStyle = '#0000ff';
+	if(this.juego.derechoPulsado){
+		switch (this.pos) {
+			case 0:
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);// izquierdo
+			//izquierdo
+				break;
+			case 1:
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);// izquierdo
+			//izquierdo
+				break;
+			case 2:
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0]), this.y + this.cabeza[1] + this.torzo[1]  , this.pie[0], (this.pie[1]/2));// izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+			//izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);//derecho
+
+				break;
+			case 3:
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0]), this.y + this.cabeza[1] + this.torzo[1]  , this.pie[0], (this.pie[1]/2));// izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+			//izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);//derecho
+
+				break;
+			case 4:
+
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1]  , this.pie[0], (this.pie[1]/2));// izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+			//izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], (this.pie[1]/2));//derecho
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+
+				break;
+			case 5:
+
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1]  , this.pie[0], (this.pie[1]/2));// izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+			//izquierdo
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], (this.pie[1]/2));//derecho
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+
+				break;
+			case 6:
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);//derecho
+			//izquierdp
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], (this.pie[1]/2));//derecho
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+
+				break;
+			case 7:
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);//derecho
+			//izquierdp
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], (this.pie[1]/2));//derecho
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+
+				break;
+			default:
+			ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);// izquierdo
+			//izquierdo
+
+		}
+
+		/*posicion [0]
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);// izquierdo
+		 //izquierdo
+*/
+
+		 /* posicion [1]
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0]), this.y + this.cabeza[1] + this.torzo[1]  , this.pie[0], (this.pie[1]/2));// izquierdo
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+		 //izquierdo
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);//derecho
+*/
+		 /* posicion [2]
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1]  , this.pie[0], (this.pie[1]/2));// izquierdo
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) + (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+		 //izquierdo
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], (this.pie[1]/2));//derecho
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+*/
+		 /* posicion [3]
+		 //derecho`
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);//derecho
+		 //izquierdp
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0]/2), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], (this.pie[1]/2));//derecho
+		 ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)) - (this.pie[0] * 1.5), this.y + this.cabeza[1] + this.torzo[1] + (this.pie[1]/2)  , this.pie[0], (this.pie[1]/2));// izquierdo
+*/
+
+
+
+		// ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
+		// ctx.fillRect(this.x+((this.width / 2) - (this.pie[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
+
+	}else if(this.juego.izquierdoPulsado){
+		ctx.fillRect(this.x+((this.width / 2) - (this.torzo[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
+		ctx.fillRect(this.x+((this.width / 2) - (this.torzo[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
+	}else{
+		ctx.fillRect(this.x+((this.width / 2) + (this.torzo[0]/2) - this.pie[0]), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
+		ctx.fillRect(this.x+((this.width / 2) - (this.torzo[0]/2)), this.y + this.cabeza[1] + this.torzo[1], this.pie[0], this.pie[1]);
+	}
+
+}

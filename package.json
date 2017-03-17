@@ -20,6 +20,7 @@
     "method-override": "^2.3.7",
     "mongoose": "^4.9.0",
     "mpromise": "^0.5.5",
+    "physicsjs": "^0.7.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
   }
