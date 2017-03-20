@@ -1,6 +1,5 @@
  export default class Entidad {
    constructor(x,y,w,h,t,c){
-
      // coordenada actual en el eje x
      this.x = x;
      // coordenada actual en el eje y
@@ -61,6 +60,22 @@
    debugLog(variable){
      if(this.debug){
        console.log(variable);
+     }
+   }
+   setName(name){
+     this.name = name;
+   }
+   getBody(){
+     if(!this.name){
+       this.name = 'unknow';
+     }
+     return {
+       name : this.name,
+       type : 'rectangle',
+       x: this.x,
+       y: this.y,
+       width:  this.width,
+       height: this.height
      }
    }
 }

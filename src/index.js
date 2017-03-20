@@ -1,8 +1,8 @@
-//import Juego from './game/juego';
-import Juego from './game/pruebas';
+import Juego from './game/juego';
+//import Juego from './game/pruebas';
 
 
-window.onload = iniciar;
+window.onload = inicio;
 function inicio(){
 const juego = new Juego();
   var temporizador = setInterval(function(){juego.controlLoop()},1000/55);

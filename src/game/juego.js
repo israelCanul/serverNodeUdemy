@@ -1,15 +1,17 @@
 import Player from '../Entities/player';
 import {debug} from '../config';
+import World from './world';
+
 
 export default class Juego{
   constructor(){
+
     this.canvas = document.getElementById('canvas');
     this.contexto = this.canvas.getContext('2d');
     this.canvas.width=600;
     this.canvas.height=400;
     this.gameRunning = false;
     this.canvas.style.background = 'white';
-
     //inicializamos los controles
     this.izquierdoPulsado=false;
 	  this.derechoPulsado=false;
@@ -22,13 +24,17 @@ export default class Juego{
 
     this.imgSprites.onload = function() {
         this.gameRunning = true;
-
     };
+    // creamoe el mundo(world)
+    this.world = new World(9.8,this);
     // creamos el player
     this.player = new Player(500, 0, 20, 26.8, 1,this);
-    this.player.setDebug(debug);// habilito el debug de la entity
+    this.player.setDebug(debug);// habilito el debug de la entity    //
+    this.player.setName('jugador');
 
 
+    this.world.addBody(this.player.getBody());
+    console.log(this.world.getBody('jugador'));
   }
   iniciar(){
     this.enemigos = [];
@@ -48,6 +54,7 @@ export default class Juego{
     if(Number.isNaN(delta)){
       delta = 0;
     }
+
     this.tiempoTranscurrido=new Date().getTime();
     this.contexto.clearRect(0,0,this.canvas.width,this.canvas.height);
     //movemos al jugador
@@ -60,6 +67,7 @@ export default class Juego{
     this.player.setVelocidadVertical(0);
 		if (this.izquierdoPulsado && !this.derechoPulsado)
 		{
+      document.dispatchEvent(this.world.event)
 			this.player.setVelocidadHorizontal(-this.player.velocidadMovimiento);
 		}
 		else if (!this.izquierdoPulsado && this.derechoPulsado)
@@ -74,6 +82,8 @@ export default class Juego{
     {
       this.player.setVelocidadVertical(this.player.velocidadMovimiento);
     }
+    this.world.step();
+    this.world.render();
   }
 
 

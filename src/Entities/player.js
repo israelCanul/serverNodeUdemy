@@ -3,6 +3,7 @@ import Entidad from './entidad';
 import Enemy from './entidad';
 
 
+
  export default class Player extends Entidad{
   constructor(x,y,w,h,t,juego){
     super(x,y,w,h,t,"blue");
@@ -28,6 +29,8 @@ import Enemy from './entidad';
     this.widthImg = 100;
     // el alto del objeto
     this.heightImg = 134;
+
+
   }
   sincronizarFrames(){
     let frame = this.frame;
@@ -81,6 +84,7 @@ import Enemy from './entidad';
         this.animContador=0;
       }
 
+
       this.frameDraw = this.sprite.correrR[this.animContador];
 
     }else if(this.juego.izquierdoPulsado){
@@ -100,8 +104,8 @@ import Enemy from './entidad';
   }
 
   dibujar(ctx){
-
     ctx.drawImage(this.juego.imgSprites,((this.juego.imgSprites.width/(this.juego.imgSprites.width/this.widthImg))*this.frameDraw), 0,this.widthImg,this.heightImg, this.x, this.y,this.width, this.height);
   }
+
 
 }
