@@ -1,3 +1,4 @@
+import Body from '../engine/body';
  export default class Entidad {
    constructor(x,y,w,h,t,c){
      // coordenada actual en el eje x
@@ -16,7 +17,10 @@
      this.dy = 0;
      // el color del objeto
      this.color = c;
+     // las masa por default es 1
+     this.mass = 1;
      this.debug = false;
+
    }
    setDebug(debug){
      this.debug = debug;
@@ -27,7 +31,6 @@
      this.y+=(delta * this.dy)/1000;
    }
    dibujar(ctx){
-
      ctx.save();
      //ctx.drawImage(this.imagen,this.spriteWidth * 6,this.spriteHeight * 3,this.spriteWidth,this.spriteHeight,this.x,this.y,this.getWidth(),this.getHeight());
      ctx.fillStyle = this.color;
@@ -35,21 +38,21 @@
      ctx.restore();
    }
    //determinamos si hay colicion con respecto a otro
-   colision(otro){
-     if (this.x + this.ancho < otro.x) {
-       return false;
-     }
-     if (this.y + this.alto < otro.y) {
-       return false;
-     }
-     if (this.x > otro.x + otro.ancho) {
-       return false;
-     }
-     if (this.y > otro.y + otro.alto) {
-       return false;
-     }
-     return true;
-   }
+  //  colision(otro){
+  //    if (this.x + this.ancho < otro.x) {
+  //      return false;
+  //    }
+  //    if (this.y + this.alto < otro.y) {
+  //      return false;
+  //    }
+  //    if (this.x > otro.x + otro.ancho) {
+  //      return false;
+  //    }
+  //    if (this.y > otro.y + otro.alto) {
+  //      return false;
+  //    }
+  //    return true;
+  //  }
    setVelocidadHorizontal(dxIni){
    		this.dx=dxIni;
 
@@ -59,23 +62,30 @@
    }
    debugLog(variable){
      if(this.debug){
-       console.log(variable);
+
      }
    }
    setName(name){
      this.name = name;
    }
+   setMass(mass){
+     this.mass = mass;
+   }
    getBody(){
      if(!this.name){
        this.name = 'unknow';
      }
-     return {
+     this.body = new Body({
+       static : false,
        name : this.name,
        type : 'rectangle',
        x: this.x,
        y: this.y,
+       mass : this.mass,
        width:  this.width,
-       height: this.height
-     }
+       height: this.height,
+       color : 'yellow',
+     });
+     return  this.body;
    }
 }

@@ -37,7 +37,6 @@ import Enemy from './entidad';
     let frames = this.frames;
         if (frame < frames){
             this.frame++;
-            console.log('s');
             return true;
         } else {
             this.frame = 0;
