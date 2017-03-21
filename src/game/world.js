@@ -28,10 +28,7 @@ export default class {
     this.height = height;
   }
   addBody(body){
-
-
       this.bodies.push(body);
-
   }
   getBody(name){
       let body = this.bodies.map((body)=>{
@@ -59,21 +56,54 @@ export default class {
   }
   coliciones(){
     var that = this;
+    var ope = 0 ;
     //this.bodiesOnCollition
-    this.bodies.map((bodyCheck,index)=>{
-      that.bodies.map((body,id)=>{
-          if(parseInt(index) != parseInt(id)){
 
-            if(bodyCheck.colision(body) && bodyCheck.name != 'plataforma'){
+    this.bodies.map((bodyCheck,index)=>{
+      /* primera forma de hacer la deteccion de la gravedad y colicion en eje y */
+      for (var i = index + 1; i < that.bodies.length; i++) {
+
+          if(bodyCheck.colicionPlataformas(that.bodies[i])){
+              if(!bodyCheck.static){
+                bodyCheck.sety((that.bodies[i].gety()-bodyCheck.height));
                 bodyCheck.suelo = true;
-                body.suelo = true;
+              }else{
+                that.bodies[i].sety((bodyCheck.gety()-that.bodies[i].height));
+                that.bodies[i].suelo = true;
+              }
+          }else{
+            // if(!bodyCheck.static){
+            //   bodyCheck.suelo = false;
+            // }else{
+            //   that.bodies[i].suelo = false;
+            // }
+          }
+
+        ope++;
+      }
+
+
+      /* segunda forma de hacer la deteccion de la gravedad y colicion en eje y ERROR operaciones al cuadrado de items bodys
+      that.bodies.map((body,id)=>{
+          if(parseInt(index) != parseInt(id) ){
+            if(bodyCheck.colision(body) && !bodyCheck.static && body.static){
+                bodyCheck.sety((body.gety()-bodyCheck.height));
+                bodyCheck.suelo = true;
+                if(bodyCheck.name == 'segundo'){
+                  console.log(bodyCheck);
+                }
             }else{
-              bodyCheck.suelo = false;
-              body.suelo = false;
+              if(!bodyCheck.suelo){
+                bodyCheck.suelo = false;
+              }
             }
           }
+      ope++;
       });
+
+      */
     });
+    //console.log(ope);
   }
   gravedadBodies(delta){
     var now = new Date().getTime();
@@ -86,10 +116,16 @@ export default class {
           body.time =  new Date().getTime();
         }else{
           // para este intento vamos a simular la caida de un cuerpo por efecto de la gravedad
-          body.acc += this.gravedad * delta;
+          //body.acc += this.gravedad * delta;
           var t = (now - body.time)/1000;
-          body.y =(t * body.acc )/1000;
+          if(body.name == 'segundo'){
+            //console.log(((t * this.gravedad))/(1000/delta));
+          }
+          //console.log(t+" : "+((t * this.gravedad))/(1000/delta));
+console.log((100 * t) - (0.5 * (this.gravedad * (t * t))));
+          body.y +=((t * this.gravedad))/(1000/delta);
         }
+
       }
     });
   }

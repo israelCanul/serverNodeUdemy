@@ -1,6 +1,6 @@
 
 export default class  Body{
-  constructor(body){
+  constructor(body,fuerza = {x : 0,y : 0}){
       this.static= body.static;
       this.name= body.name;
       this.type= body.type;
@@ -13,6 +13,7 @@ export default class  Body{
       this.suelo = false;
       this.time = new Date().getTime();
       this.color = body.color;
+      this.force = fuerza;
   }
   colision(otro){
     if (this.x + this.width < otro.x) {
@@ -28,5 +29,39 @@ export default class  Body{
       return false;
     }
     return true;
+  }
+  colicionPlataformas(otro){
+    var colicion = true;
+    if (this.x + this.width <= otro.x) {
+      colicion = false;
+    }
+    if (this.y + this.height < otro.y) {
+      colicion  = false;
+    }
+    if (this.x >= otro.x + otro.width) {
+      colicion  = false;
+    }
+    if (this.y > otro.y + otro.height) {
+      colicion  = false;
+    }
+    if (this.y + this.height > otro.y && this.y < otro.y && colicion) {
+      colicion  = true;
+    }
+    return colicion;
+  }
+  getx(){
+    return this.x;
+  }
+  gety(){
+    return this.y;
+  }
+  setx(x){
+    this.x = x;
+  }
+  sety(y){
+    this.y = y;
+  }
+  applyForce(fuerza){
+    this.force = fuerza;
   }
 }

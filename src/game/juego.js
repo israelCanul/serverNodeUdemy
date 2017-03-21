@@ -7,8 +7,8 @@ export default class Juego{
   constructor(){
     this.canvas = document.getElementById('canvas');
     this.contexto = this.canvas.getContext('2d');
-    this.canvas.width=600;
-    this.canvas.height=400;
+    this.canvas.width=800;
+    this.canvas.height=600;
     this.gameRunning = false;
     //this.canvas.style.background = 'yellow';
     //inicializamos los controles
@@ -25,38 +25,85 @@ export default class Juego{
         this.gameRunning = true;
     };
     // creamoe el mundo(world)
-    this.world = new World(98,this);
+    this.world = new World(980,this);
     // creamos el player
     this.player = new Player(500, 0, 20, 26.8, 1,this);
     this.player.setDebug(debug);// habilito el debug de la entity    //
     this.player.setMass(3);
     this.player.setName('jugador');
 
+
     this.world.addBody(new Body({
       static : true,
       name : 'plataforma',
       type : 'rectangle',
       x: 0,
-      y: 395,
+      y: 300,
       mass : 2,
-      width:  580,
-      height: 5,
+      width:  500,
+      height: 1,
       color : 'black'
     }));
-    this.world.addBody(this.player.getBody());
+
+    //this.world.addBody(this.player.getBody());
+    // this.world.addBody(new Body({
+    //   static : true,
+    //   name : 'plataforma',
+    //   type : 'rectangle',
+    //   x: 496,
+    //   y: 100,
+    //   mass : 2,
+    //   width:  5,
+    //   height: 5,
+    //   color : 'black'
+    // }));
+    // this.world.addBody(new Body({
+    //   static : false,
+    //   name : 'segundo',
+    //   type : 'rectangle',
+    //   x: 10,
+    //   y: 10,
+    //   mass : 2,
+    //   width:  10,
+    //   height: 10,
+    //   color : 'blue'
+    // }));
+    // this.world.addBody(new Body({
+    //   static : false,
+    //   name : 'segundo4',
+    //   type : 'rectangle',
+    //   x: 230,
+    //   y: 10,
+    //   mass : 2,
+    //   width:  10,
+    //   height: 10,
+    //   color : 'green'
+    // }));
+    //
     this.world.addBody(new Body({
       static : false,
-      name : 'segundo',
+      name : 'segundo4',
       type : 'rectangle',
-      x: 10,
-      y: 10,
+      x: 190,
+      y: 200,
       mass : 2,
-      width:  11,
-      height: 11,
-      color : 'blue'
+      width:  15,
+      height: 10,
+      color : 'green'
     }));
+    // this.world.addBody(new Body({
+    //   static : false,
+    //   name : 'segundo2',
+    //   type : 'rectangle',
+    //   x: 100,
+    //   y: 280,
+    //   mass : 2,
+    //   width:  11,
+    //   height: 11,
+    //   color : 'blue'
+    // }));
 
-    //console.log(this.world.getBody('jugador'));
+    console.log(this.world.getBody('jugador'));
   }
   iniciar(){
     this.enemigos = [];
@@ -111,7 +158,6 @@ export default class Juego{
     {
       this.player.setVelocidadVertical(this.player.velocidadMovimiento);
     }
-
   }
 
 
