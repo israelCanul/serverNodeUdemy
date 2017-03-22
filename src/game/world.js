@@ -54,6 +54,9 @@ export default class {
     this.gravedadBodies(delta);
     this.coliciones();
   }
+  deteccionEventos(){
+
+  }
   coliciones(){
     var that = this;
     var ope = 0 ;
@@ -110,6 +113,7 @@ export default class {
     var that = this;
 
     this.bodies.map((body)=>{
+      //console.log(body.force.y);
       if(!body.static){
         if(body.suelo){
           body.acc = 0;
@@ -118,12 +122,16 @@ export default class {
           // para este intento vamos a simular la caida de un cuerpo por efecto de la gravedad
           //body.acc += this.gravedad * delta;
           var t = (now - body.time)/1000;
-          if(body.name == 'segundo'){
-            //console.log(((t * this.gravedad))/(1000/delta));
+
+          if(body.force.y>0 && ((-1)*((body.force.y * t) - (0.5 * (this.gravedad * (t * t))))) < 0){
+              //console.log((-1)*((120 * t) - (0.5 * (this.gravedad * (t * t)))));
+              body.y += (-1)*((body.force.y * t) - (0.5 * (this.gravedad * (t * t))));
+          }else{
+            body.force.y = 0;
+            body.y +=((t * this.gravedad))/(1000/delta);
           }
-          //console.log(t+" : "+((t * this.gravedad))/(1000/delta));
-console.log((100 * t) - (0.5 * (this.gravedad * (t * t))));
-          body.y +=((t * this.gravedad))/(1000/delta);
+
+          //body.y +=(-1)*((120 * t) - (0.5 * (this.gravedad * (t * t))));
         }
 
       }

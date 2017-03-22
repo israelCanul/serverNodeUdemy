@@ -40,12 +40,12 @@ export default class Juego{
       x: 0,
       y: 300,
       mass : 2,
-      width:  500,
+      width:  600,
       height: 1,
       color : 'black'
     }));
 
-    //this.world.addBody(this.player.getBody());
+    this.world.addBody(this.player.getBody());
     // this.world.addBody(new Body({
     //   static : true,
     //   name : 'plataforma',
@@ -145,6 +145,7 @@ export default class Juego{
 		{
       //document.dispatchEvent(this.world.event)
 			this.player.setVelocidadHorizontal(-this.player.velocidadMovimiento);
+
 		}
 		else if (!this.izquierdoPulsado && this.derechoPulsado)
 		{
@@ -153,6 +154,8 @@ export default class Juego{
     if (this.arribaPulsado && !this.abajoPulsado)
     {
       this.player.setVelocidadVertical(-this.player.velocidadMovimiento);
+      this.player.body.applyForce([0,100]);
+      //console.log(this.player.body);
     }
     else if (!this.arribaPulsado && this.abajoPulsado)
     {

@@ -28,7 +28,8 @@ import Body from '../engine/body';
    moverBase(delta){
      //Actualizamos las posiciones de las coordenadas
      this.x += (delta * this.dx)/1000;
-     this.y+=(delta * this.dy)/1000;
+     //this.y+=(delta * this.dy)/1000;
+     this.y=this.body.y;
    }
    dibujar(ctx){
      ctx.save();
@@ -37,22 +38,7 @@ import Body from '../engine/body';
  		 ctx.fillRect(this.x, this.y, this.width, this.height);
      ctx.restore();
    }
-   //determinamos si hay colicion con respecto a otro
-  //  colision(otro){
-  //    if (this.x + this.ancho < otro.x) {
-  //      return false;
-  //    }
-  //    if (this.y + this.alto < otro.y) {
-  //      return false;
-  //    }
-  //    if (this.x > otro.x + otro.ancho) {
-  //      return false;
-  //    }
-  //    if (this.y > otro.y + otro.alto) {
-  //      return false;
-  //    }
-  //    return true;
-  //  }
+
    setVelocidadHorizontal(dxIni){
    		this.dx=dxIni;
 
