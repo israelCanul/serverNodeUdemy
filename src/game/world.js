@@ -74,14 +74,7 @@ export default class {
                 that.bodies[i].sety((bodyCheck.gety()-that.bodies[i].height));
                 that.bodies[i].suelo = true;
               }
-          }else{
-            // if(!bodyCheck.static){
-            //   bodyCheck.suelo = false;
-            // }else{
-            //   that.bodies[i].suelo = false;
-            // }
           }
-
         ope++;
       }
 
