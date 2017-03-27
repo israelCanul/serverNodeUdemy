@@ -67,6 +67,11 @@ export default class  Body{
       this.suelo = false;
     }
     this.force.x = fuerza[0];
-
+  }
+  getForceY(){
+    return this.force.y;
+  }
+  getForceX(){
+    return this.force.x;
   }
 }

@@ -132,9 +132,8 @@ export default class Juego{
     this.tiempoTranscurrido=new Date().getTime();
     this.contexto.clearRect(0,0,this.canvas.width,this.canvas.height);
     //movemos al jugador
-    this.player.mover(delta);
     this.world.step(delta);
-
+    this.player.mover(delta);
     this.world.render();
     //dibujamos al jugador
     this.player.dibujar(this.contexto);
@@ -143,24 +142,29 @@ export default class Juego{
     this.player.setVelocidadVertical(0);
 		if (this.izquierdoPulsado && !this.derechoPulsado)
 		{
-      //document.dispatchEvent(this.world.event)
+        this.player.body.applyForce([-250,this.player.body.getForceY()]);
 			this.player.setVelocidadHorizontal(-this.player.velocidadMovimiento);
 
 		}
 		else if (!this.izquierdoPulsado && this.derechoPulsado)
 		{
+      this.player.body.applyForce([250,this.player.body.getForceY()]);
 			this.player.setVelocidadHorizontal(this.player.velocidadMovimiento);
 		}
     if (this.arribaPulsado && !this.abajoPulsado)
     {
       this.player.setVelocidadVertical(-this.player.velocidadMovimiento);
-      this.player.body.applyForce([0,100]);
+      this.player.body.applyForce([this.player.body.getForceX(),130]);
       //console.log(this.player.body);
     }
     else if (!this.arribaPulsado && this.abajoPulsado)
     {
+
       this.player.setVelocidadVertical(this.player.velocidadMovimiento);
+    }else if(!this.izquierdoPulsado && !this.derechoPulsado){
+      this.player.body.applyForce([0,0]);
     }
+
   }
 
 

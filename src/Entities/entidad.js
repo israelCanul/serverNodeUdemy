@@ -14,11 +14,12 @@ import Body from '../engine/body';
      // velocidad en el eje x
      this.dx = 0;
      // velocidad en el eje y
-     this.dy = 0;
+     this.dy = 100;// este valor es igual a la aceleracion que tiene el cuerpo
      // el color del objeto
      this.color = c;
      // las masa por default es 1
-     this.mass = 1;
+     this.mass = 20;
+
      this.debug = false;
 
    }
@@ -27,7 +28,8 @@ import Body from '../engine/body';
    }
    moverBase(delta){
      //Actualizamos las posiciones de las coordenadas
-     this.x += (delta * this.dx)/1000;
+     //this.x += (delta * this.dx)/1000;
+     this.x = this.body.x;
      //this.y+=(delta * this.dy)/1000;
      this.y=this.body.y;
    }
@@ -68,7 +70,7 @@ import Body from '../engine/body';
        x: this.x,
        y: this.y,
        mass : this.mass,
-       width:  this.width,
+       width:  this.width - 10,
        height: this.height,
        color : 'yellow',
      });

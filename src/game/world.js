@@ -11,6 +11,7 @@ export default class {
     this.height = juego.canvas.height;
     this.colicion = [];
     this.running = true;
+
     //this.event =new  CustomEvent('coliciones', { 'data': this.colicion });
     /* Definimos el nombre del evento que es 'build'.*/
     //this.event.initEvent('coliciones', true, true);
@@ -69,10 +70,15 @@ export default class {
           if(bodyCheck.colicionPlataformas(that.bodies[i])){
               if(!bodyCheck.static){
                 bodyCheck.sety((that.bodies[i].gety()-bodyCheck.height));
-                bodyCheck.suelo = true;
+                //bodyCheck.suelo = true;
+                bodyCheck.acc = 0;
+                bodyCheck.time =  new Date().getTime();
+
               }else{
                 that.bodies[i].sety((bodyCheck.gety()-that.bodies[i].height));
-                that.bodies[i].suelo = true;
+                //that.bodies[i].suelo = true;
+                that.bodies[i].acc = 0;
+                that.bodies[i].time =  new Date().getTime();
               }
           }
         ope++;
@@ -109,8 +115,18 @@ export default class {
       //console.log(body.force.y);
       if(!body.static){
         // para lograr esto debesmos adentrarnos en el tema de El rozamiento por deslizamiento
+       // la formula para la aceleracion es igual a v
+         if(body.force.x != 0){
+           var acc = 0;
+           if(body.force.x > 0 ){
+              acc = (body.force.x - 10) / body.mass ;
+           }else{
+              acc = (body.force.x + 10) / body.mass ;
+           }
+            body.x +=acc /(1000/delta);// se aplica la fuerza de gravedad sobre el cuerpo
 
 
+         }
 
         // para aplicar cambios sobre el eye y
         if(body.suelo){
@@ -129,8 +145,9 @@ export default class {
           }else{
             // si no se esta aplicando una fuerza en el eje y y si no esta en contacto
             // con el suelo aplicamos la fuerza de gravedad
+
             body.force.y = 0;//se iguala a 0 la fuerza sobre el eje Y
-            body.y +=((t * this.gravedad))/(1000/delta);// se aplica la fuerza de gravedad sobre el cuerpo
+            body.y +=((t * this.gravedad))/(1000/10);// se aplica la fuerza de gravedad sobre el cuerpo
           }
         }
       }
