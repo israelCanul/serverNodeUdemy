@@ -88,10 +88,7 @@ export default class {
   setValuesOfCollition(first,otro){
     first.applyForce([0,0]);
     first.time =  new Date().getTime();
-    /*
-    body.vectorForce.down = true;
-    body.vectorForce.up = false;
-    */
+
     // primero hacemos la validacion para conocer hacia donde apunta la fuerza de empuje del objeto evaluado si hacia
     // arriba o hacia abajo
     // esto de acuerdo al vector que representan lafuersa sobre los 4 ejes del que esta constituido el juego arriba, abajo, izquierda o derecha
@@ -99,7 +96,6 @@ export default class {
       first.sety((otro.gety()-first.height));
     }
     if(!first.vectorForce.down && first.vectorForce.up){
-      console.log(first);
       first.sety((otro.gety() + otro.height));
     }
   }
@@ -148,6 +144,7 @@ export default class {
             body.vectorForce.up = false;
             body.force.y = 0;//se iguala a 0 la fuerza sobre el eje Y
             body.y +=((t * this.gravedad))/(1000/10);// se aplica la fuerza de gravedad sobre el cuerpo
+            if(body.name == 'jugador') console.log(body.y);
           }
         //}
       }

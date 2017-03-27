@@ -101,7 +101,7 @@ import Enemy from './entidad';
   }
 
   dibujar(ctx){
-    //ctx.drawImage(this.juego.imgSprites,((this.juego.imgSprites.width/(this.juego.imgSprites.width/this.widthImg))*this.frameDraw), 0,this.widthImg,this.heightImg, this.x, this.y,this.width, this.height);
+    //ctx.drawImage(this.juego.imgSprites,((this.juego.imgSprites.width/(this.juego.imgSprites.width/this.widthImg))*this.frameDraw), 0,this.widthImg,this.heightImg, this.x -5, this.y,this.width, this.height);
   }
 
 

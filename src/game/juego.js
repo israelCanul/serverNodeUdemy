@@ -32,6 +32,7 @@ export default class Juego{
     this.player.setMass(3);
     this.player.setName('jugador');
 
+    this.focus = false;
 
     this.world.addBody(new Body({
       static : true,
@@ -128,7 +129,7 @@ export default class Juego{
      console.log(e.data);
      stop = true ;
     }, false);
-    if(this.gameRunning && !stop){
+    if(this.gameRunning && !stop ){
 
       this.loop();
     }else{
@@ -257,4 +258,8 @@ export default class Juego{
   			this.espacioPulsado=false;
   		}
   	}
+    estado(e){
+      this.focus = e;
+    }
+
 }

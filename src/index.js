@@ -13,6 +13,13 @@ const juego = new Juego();
   document.onkeyup=function(e){
     juego.soltarTecla(e);
   };
+  window.onfocus = function () {
+    juego.estado(true);
+  };
+
+  window.onblur = function () {
+    juego.estado(true);
+  };
 }
 
 
