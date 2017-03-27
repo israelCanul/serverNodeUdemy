@@ -27,7 +27,7 @@ export default class Juego{
     // creamoe el mundo(world)
     this.world = new World(980,this);
     // creamos el player
-    this.player = new Player(500, 0, 20, 26.8, 1,this);
+    this.player = new Player(200, 0, 20, 26.8, 1,this);
     this.player.setDebug(debug);// habilito el debug de la entity    //
     this.player.setMass(3);
     this.player.setName('jugador');
@@ -91,6 +91,20 @@ export default class Juego{
       height: 10,
       color : 'green'
     }));
+
+
+    this.world.addBody(new Body({
+      static : true,
+      name : 'segundo4',
+      type : 'rectangle',
+      x: 100,
+      y: 230,
+      mass : 2,
+      width:  15,
+      height: 10,
+      color : 'green'
+    }));
+
     // this.world.addBody(new Body({
     //   static : false,
     //   name : 'segundo2',

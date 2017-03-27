@@ -60,52 +60,48 @@ export default class {
   }
   coliciones(){
     var that = this;
-    var ope = 0 ;
-    //this.bodiesOnCollition
 
     this.bodies.map((bodyCheck,index)=>{
       /* primera forma de hacer la deteccion de la gravedad y colicion en eje y */
       for (var i = index + 1; i < that.bodies.length; i++) {
 
           if(bodyCheck.colicionPlataformas(that.bodies[i])){
-              if(!bodyCheck.static){
-                bodyCheck.sety((that.bodies[i].gety()-bodyCheck.height));
-                //bodyCheck.suelo = true;
-                bodyCheck.acc = 0;
-                bodyCheck.time =  new Date().getTime();
-
-              }else{
-                that.bodies[i].sety((bodyCheck.gety()-that.bodies[i].height));
-                //that.bodies[i].suelo = true;
-                that.bodies[i].acc = 0;
-                that.bodies[i].time =  new Date().getTime();
-              }
+               if(!bodyCheck.static){
+                 this.setValuesOfCollition(bodyCheck,that.bodies[i]);
+              //   //bodyCheck.suelo = true;
+              //   bodyCheck.acc = 0;
+              //   bodyCheck.time =  new Date().getTime();
+              //
+               }else{
+                  this.setValuesOfCollition(that.bodies[i],bodyCheck);
+              //   //that.bodies[i].suelo = true;
+              //   that.bodies[i].acc = 0;
+              //   that.bodies[i].time =  new Date().getTime();
+               }
           }
-        ope++;
+
       }
 
-
-      /* segunda forma de hacer la deteccion de la gravedad y colicion en eje y ERROR operaciones al cuadrado de items bodys
-      that.bodies.map((body,id)=>{
-          if(parseInt(index) != parseInt(id) ){
-            if(bodyCheck.colision(body) && !bodyCheck.static && body.static){
-                bodyCheck.sety((body.gety()-bodyCheck.height));
-                bodyCheck.suelo = true;
-                if(bodyCheck.name == 'segundo'){
-                  console.log(bodyCheck);
-                }
-            }else{
-              if(!bodyCheck.suelo){
-                bodyCheck.suelo = false;
-              }
-            }
-          }
-      ope++;
-      });
-
-      */
     });
-    //console.log(ope);
+
+  }
+  setValuesOfCollition(first,otro){
+    first.applyForce([0,0]);
+    first.time =  new Date().getTime();
+    /*
+    body.vectorForce.down = true;
+    body.vectorForce.up = false;
+    */
+    // primero hacemos la validacion para conocer hacia donde apunta la fuerza de empuje del objeto evaluado si hacia
+    // arriba o hacia abajo
+    // esto de acuerdo al vector que representan lafuersa sobre los 4 ejes del que esta constituido el juego arriba, abajo, izquierda o derecha
+    if(first.vectorForce.down && !first.vectorForce.up){
+      first.sety((otro.gety()-first.height));
+    }
+    if(!first.vectorForce.down && first.vectorForce.up){
+      console.log(first);
+      first.sety((otro.gety() + otro.height));
+    }
   }
   gravedadBodies(delta){
     var now = new Date().getTime();
@@ -129,10 +125,11 @@ export default class {
          }
 
         // para aplicar cambios sobre el eye y
-        if(body.suelo){
-          body.acc = 0;
-          body.time =  new Date().getTime();
-        }else{
+        // if(body.suelo){
+        //   body.acc = 0;
+        //   body.time =  new Date().getTime();
+        // }else{
+
           // contabilisamos el tiempo que a pasado desde que el objeto cae  hasta este punto
           // esto para calcular la fuerza de gravedad aplicada a la caida de un cuerpo
           var t = (now - body.time)/1000;
@@ -142,14 +139,17 @@ export default class {
           if(body.force.y>0 && ((-1)*((body.force.y * t) - (0.5 * (this.gravedad * (t * t))))) < 0){
               // de acuerdo a la formula de y = h + v°t - 1/2 g(t*t);
               body.y += (-1)*((body.force.y * t) - (0.5 * (this.gravedad * (t * t))));
+              body.vectorForce.down = false;
+              body.vectorForce.up = true;
           }else{
             // si no se esta aplicando una fuerza en el eje y y si no esta en contacto
             // con el suelo aplicamos la fuerza de gravedad
-
+            body.vectorForce.down = true;
+            body.vectorForce.up = false;
             body.force.y = 0;//se iguala a 0 la fuerza sobre el eje Y
             body.y +=((t * this.gravedad))/(1000/10);// se aplica la fuerza de gravedad sobre el cuerpo
           }
-        }
+        //}
       }
     });
   }

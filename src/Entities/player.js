@@ -64,6 +64,7 @@ import Enemy from './entidad';
   }
 
     this.setFrame();
+    //if(this.name == 'jugador') console.log(this.body.vectorForce);
     this.moverBase(delta);
   }
   colosionadoCon(otro){
@@ -82,10 +83,7 @@ import Enemy from './entidad';
       if(this.animContador >= this.sprite.correrR.length){
         this.animContador=0;
       }
-
-
       this.frameDraw = this.sprite.correrR[this.animContador];
-
     }else if(this.juego.izquierdoPulsado){
           this.animContador++;
           if(this.animContador >= this.sprite.correrL.length){
@@ -103,7 +101,7 @@ import Enemy from './entidad';
   }
 
   dibujar(ctx){
-    ctx.drawImage(this.juego.imgSprites,((this.juego.imgSprites.width/(this.juego.imgSprites.width/this.widthImg))*this.frameDraw), 0,this.widthImg,this.heightImg, this.x  - 5, this.y,this.width , this.height);
+    //ctx.drawImage(this.juego.imgSprites,((this.juego.imgSprites.width/(this.juego.imgSprites.width/this.widthImg))*this.frameDraw), 0,this.widthImg,this.heightImg, this.x, this.y,this.width, this.height);
   }
 
 

@@ -21,7 +21,7 @@ import Body from '../engine/body';
      this.mass = 20;
 
      this.debug = false;
-
+     this.name = "random";
    }
    setDebug(debug){
      this.debug = debug;

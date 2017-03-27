@@ -14,6 +14,12 @@ export default class  Body{
       this.time = new Date().getTime();
       this.color = body.color;
       this.force = fuerza;
+      this.vectorForce = [
+        {up : false},
+        {down : false},
+        {left : false},
+        {down : false }
+      ];
   }
   colision(otro){
     if (this.x + this.width < otro.x) {
@@ -32,6 +38,7 @@ export default class  Body{
   }
   colicionPlataformas(otro){
     var colicion = true;
+
     if (this.x + this.width <= otro.x) {
       colicion = false;
     }
@@ -49,6 +56,9 @@ export default class  Body{
     }
     return colicion;
   }
+  checkY(otro){
+    
+  }
   getx(){
     return this.x;
   }
@@ -61,6 +71,7 @@ export default class  Body{
   sety(y){
     this.y = y;
   }
+
   applyForce(fuerza){
     this.force.y = fuerza[1];
     if(this.force.y>0){
