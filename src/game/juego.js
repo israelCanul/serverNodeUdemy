@@ -47,43 +47,10 @@ export default class Juego{
     }));
 
     this.world.addBody(this.player.getBody());
-    // this.world.addBody(new Body({
-    //   static : true,
-    //   name : 'plataforma',
-    //   type : 'rectangle',
-    //   x: 496,
-    //   y: 100,
-    //   mass : 2,
-    //   width:  5,
-    //   height: 5,
-    //   color : 'black'
-    // }));
-    // this.world.addBody(new Body({
-    //   static : false,
-    //   name : 'segundo',
-    //   type : 'rectangle',
-    //   x: 10,
-    //   y: 10,
-    //   mass : 2,
-    //   width:  10,
-    //   height: 10,
-    //   color : 'blue'
-    // }));
-    // this.world.addBody(new Body({
-    //   static : false,
-    //   name : 'segundo4',
-    //   type : 'rectangle',
-    //   x: 230,
-    //   y: 10,
-    //   mass : 2,
-    //   width:  10,
-    //   height: 10,
-    //   color : 'green'
-    // }));
-    //
+
     this.world.addBody(new Body({
       static : false,
-      name : 'segundo4',
+      name : 'bloque',
       type : 'rectangle',
       x: 190,
       y: 200,
@@ -106,17 +73,17 @@ export default class Juego{
       color : 'green'
     }));
 
-    // this.world.addBody(new Body({
-    //   static : false,
-    //   name : 'segundo2',
-    //   type : 'rectangle',
-    //   x: 100,
-    //   y: 280,
-    //   mass : 2,
-    //   width:  11,
-    //   height: 11,
-    //   color : 'blue'
-    // }));
+    this.world.addBody(new Body({
+      static : false,
+      name : 'segundo4',
+      type : 'rectangle',
+      x: 80,
+      y: 230,
+      mass : 2,
+      width:  3,
+      height: 3,
+      color : 'green'
+    }));
 
     console.log(this.world.getBody('jugador'));
   }
@@ -130,7 +97,6 @@ export default class Juego{
      stop = true ;
     }, false);
     if(this.gameRunning && !stop ){
-
       this.loop();
     }else{
       this.tiempoTranscurrido=new Date().getTime();
@@ -146,6 +112,7 @@ export default class Juego{
 
     this.tiempoTranscurrido=new Date().getTime();
     this.contexto.clearRect(0,0,this.canvas.width,this.canvas.height);
+
     //movemos al jugador
     this.world.step(delta);
     this.player.mover(delta);
@@ -153,51 +120,38 @@ export default class Juego{
     //dibujamos al jugador
     this.player.dibujar(this.contexto);
 
-    this.player.setVelocidadHorizontal(0);
-    this.player.setVelocidadVertical(0);
+
 		if (this.izquierdoPulsado && !this.derechoPulsado)
 		{
         this.player.body.applyForce([-250,this.player.body.getForceY()]);
-			this.player.setVelocidadHorizontal(-this.player.velocidadMovimiento);
+
 
 		}
 		else if (!this.izquierdoPulsado && this.derechoPulsado)
 		{
       this.player.body.applyForce([250,this.player.body.getForceY()]);
-			this.player.setVelocidadHorizontal(this.player.velocidadMovimiento);
+
 		}
     if (this.arribaPulsado && !this.abajoPulsado)
     {
-      this.player.setVelocidadVertical(-this.player.velocidadMovimiento);
-      this.player.body.applyForce([this.player.body.getForceX(),130]);
-      //console.log(this.player.body);
+      if(this.player.body.suelo){
+        this.player.body.applyForce([this.player.body.getForceX(),130]);
+      }
     }
     else if (!this.arribaPulsado && this.abajoPulsado)
     {
 
-      this.player.setVelocidadVertical(this.player.velocidadMovimiento);
     }else if(!this.izquierdoPulsado && !this.derechoPulsado){
       this.player.body.applyForce([0,0]);
     }
-
   }
-
-
   notificarMuerte(){
     console.log('moriste');
   }
-
   pulsarTecla(e){
   		//Anulamos las acciones por defecto de la tecla
   		e.preventDefault();
 
-
-  		//Si estamos en el dinal de una partida, se espera la pulsación ENTER
-  		// if (this.esperandoTecla && e.keyCode==13)
-  		// {
-  		// 	this.empezarJuego();
-  		// 	return;
-  		// }
   		if (e.keyCode==37)
   		{
   			//Cursor izquierdo

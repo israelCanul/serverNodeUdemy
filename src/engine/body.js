@@ -6,6 +6,8 @@ export default class  Body{
       this.type= body.type;
       this.x= body.x;
       this.y= body.y;
+      this.x_old = 0;
+      this.y_old = 0;
       this.mass= body.mass;
       this.width= body.width;
       this.height= body.height;
@@ -18,7 +20,7 @@ export default class  Body{
         {up : false},
         {down : false},
         {left : false},
-        {down : false }
+        {right : false }
       ];
   }
   colision(otro){
@@ -57,7 +59,7 @@ export default class  Body{
     return colicion;
   }
   checkY(otro){
-    
+
   }
   getx(){
     return this.x;
